@@ -1,0 +1,38 @@
+{
+  "name": "server",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "bun --hot src/index.ts",
+    "database": "docker compose up -d",
+    "prisma": "bunx prisma generate",
+    "prisma-doctor": "bunx prisma studio",
+    "client": "bun --cwd ./client dev",
+    "prisma-db-push": "bunx prisma db push",
+    "dev-bash-init": "bun run database && bun run prisma-db-push && concurrently \"bun run server\" \"bun run client\" \"bun run prisma\" \"bun run prisma-doctor\"",
+    "dev-bash": "bun run database && concurrently \"bun run server\" \"bun run client\" \"bun run prisma\" \"bun run prisma-doctor\"",
+    "dev-pwsh": "bun run database; Start-Sleep -Seconds 5; concurrently \"bun run server\" \"bun run client\" \"bun run prisma\" ",
+    "devoff": "docker compose down"
+  },
+  "devDependencies": {
+    "@prisma/client": "^5.8.1",
+    "@types/bun": "latest",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/lodash": "^4.14.202"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "prisma": "^5.8.1"
+  }
+}
